@@ -19,7 +19,7 @@ shallow_clone() {
 }
 
 usage() {
-  echo "syntax: $0 <buster|bullseye|bookworm>" >&2
+  echo "syntax: $0 <buster|bullseye|bookworm|trixie|noble>" >&2
   exit 1
 }
 
@@ -53,6 +53,11 @@ case $dist in
     targetdist=bookworm
     extraversion=""
     ;;
+  trixie)
+    debdist=trixie
+    targetdist=trixie
+    extraversion=""
+    ;;
   xenial)
     # not tested
     debdist=stretch
@@ -70,6 +75,11 @@ case $dist in
     debdist=buster
     targetdist=disco
     extraversion="~ubuntu1904+"
+    ;;
+  noble)
+    debdist=noble
+    targetdist=noble
+    extraversion=""
     ;;
   *)
     echo "unknown build distribution $1" >&2
@@ -172,6 +182,18 @@ case $debdist in
         fetch_archive cx_Freeze-6.15.9 \
                       https://github.com/marcelotduarte/cx_Freeze/archive/refs/tags/6.15.9.tar.gz \
                       d32b309b355f2b377dae585a839e39e3251b3f9716f2b4983be92972c2863000
+        ;;
+
+    trixie)
+        fetch_archive cx_Freeze-8.1.0 \
+                      https://github.com/marcelotduarte/cx_Freeze/archive/refs/tags/8.1.0.tar.gz \
+                      45d82f7e541ae4fb05ed4250c03a84f969ba94a43bac0112a86c0b7793a12c3b
+        ;;
+
+    noble)
+        fetch_archive cx_Freeze-7.2.0 \
+                      https://github.com/marcelotduarte/cx_Freeze/archive/refs/tags/7.2.0.tar.gz \
+                      b2846d0215fd6e18a1dccc398f71a67840d77c1fb2f5ae911d87867d4330bcfa
         ;;
 esac
 
