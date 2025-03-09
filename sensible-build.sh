@@ -19,7 +19,7 @@ shallow_clone() {
 }
 
 usage() {
-  echo "syntax: $0 <buster|bullseye|bookworm|trixie>" >&2
+  echo "syntax: $0 <buster|bullseye|bookworm|trixie|noble>" >&2
   exit 1
 }
 
@@ -75,6 +75,10 @@ case $dist in
     debdist=buster
     targetdist=disco
     extraversion="~ubuntu1904+"
+    ;;
+  noble)
+    targetdist=noble
+    extraversion=""
     ;;
   *)
     echo "unknown build distribution $1" >&2
@@ -179,6 +183,11 @@ case $debdist in
                       d32b309b355f2b377dae585a839e39e3251b3f9716f2b4983be92972c2863000
         ;;
     trixie)
+        fetch_archive cx_freeze-7.2.0 \
+                      https://files.pythonhosted.org/packages/6e/23/6947cd90cfe87712099fbeab2061309ab1d2a95d54f3453cb6bb21b00034/cx_freeze-7.2.0.tar.gz \
+                      c57f7101b4d35132464b1ec88cb8948c3b7c5b4ece4bb354c16091589cb33583
+        ;;
+    noble)
         fetch_archive cx_freeze-7.2.0 \
                       https://files.pythonhosted.org/packages/6e/23/6947cd90cfe87712099fbeab2061309ab1d2a95d54f3453cb6bb21b00034/cx_freeze-7.2.0.tar.gz \
                       c57f7101b4d35132464b1ec88cb8948c3b7c5b4ece4bb354c16091589cb33583
