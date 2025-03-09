@@ -77,6 +77,7 @@ case $dist in
     extraversion="~ubuntu1904+"
     ;;
   noble)
+    debdist=noble
     targetdist=noble
     extraversion=""
     ;;
