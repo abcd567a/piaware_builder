@@ -84,9 +84,9 @@ build_mlat-client:
 install_mlat-client:
 	install -d $(CURDIR)/debian/piaware/usr/lib/piaware/helpers
 	install -t $(CURDIR)/debian/piaware/usr/lib/piaware/helpers /usr/local/bin/fa-mlat-client
-	install -d $(CURDIR)/debian/piaware/usr/lib/python3.13/dist-packages
-	mv /usr/local/lib/python3.13/dist-packages/MlatClient-0.2.13-py3.13-linux-${ARCH}.egg $(CURDIR)/debian/piaware/usr/lib/python3.13/dist-packages/
-	mv /usr/local/lib/python3.13/dist-packages/easy-install.pth $(CURDIR)/debian/piaware/usr/lib/python3.13/dist-packages/
+	install -d $(CURDIR)/debian/piaware/usr/lib/python3/dist-packages
+	mv /usr/local/lib/python3.13/dist-packages/MlatClient-0.2.13-py3.13-linux-${ARCH}.egg $(CURDIR)/debian/piaware/usr/lib/python3/dist-packages/
+	mv /usr/local/lib/python3.13/dist-packages/easy-install.pth $(CURDIR)/debian/piaware/usr/lib/python3/dist-packages/
 	rm /usr/local/bin/mlat-client
 	rm /usr/local/bin/fa-mlat-client
 
