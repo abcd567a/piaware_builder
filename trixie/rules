@@ -11,8 +11,6 @@ PYTHON3 := /usr/bin/$(shell py3versions -d)
 
 VENV=$(CURDIR)/debian/venv
 
-ARCH=`uname -m`
-
 CHANGELOG_VERSION=$(shell dpkg-parsechangelog | sed -n 's/^Version: //p')
 
 # ensure that setuptools doesn't try to retrieve anything off the network:
@@ -85,7 +83,7 @@ install_mlat-client:
 	install -d $(CURDIR)/debian/piaware/usr/lib/piaware/helpers
 	install -t $(CURDIR)/debian/piaware/usr/lib/piaware/helpers /usr/local/bin/fa-mlat-client
 	install -d $(CURDIR)/debian/piaware/usr/lib/python3/dist-packages
-	mv /usr/local/lib/python3.13/dist-packages/MlatClient-0.2.13-py3.13-linux-${ARCH}.egg $(CURDIR)/debian/piaware/usr/lib/python3/dist-packages/
+	mv /usr/local/lib/python3.13/dist-packages/MlatClient-0.2.13-py3.13-linux-*.egg $(CURDIR)/debian/piaware/usr/lib/python3/dist-packages/
 	mv /usr/local/lib/python3.13/dist-packages/easy-install.pth $(CURDIR)/debian/piaware/usr/lib/python3/dist-packages/
 	rm /usr/local/bin/mlat-client
 	rm /usr/local/bin/fa-mlat-client
