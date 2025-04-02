@@ -32,11 +32,11 @@ else
 PYTHON_HOST_PLATFORM=$(shell $(PYTHON3) -c "import sysconfig; print(sysconfig.get_platform())")
 endif
 
-override_dh_auto_clean: clean_tcllauncher clean_dump1090 clean_piaware clean_dump978
+override_dh_auto_clean: clean_tcllauncher clean_dump1090 clean_mlat-client clean_piaware clean_dump978
 
 override_dh_auto_configure: check_versions configure_tcllauncher
 
-override_dh_auto_build: build_tcllauncher build_dump1090 build_dump978 build_mlat-client
+override_dh_auto_build: build_tcllauncher build_dump1090 build_mlat-client build_dump978
 
 override_dh_auto_install: install_tcllauncher install_dump1090 install_mlat-client install_piaware install_dump978
 
@@ -77,18 +77,25 @@ install_dump978:
 	install -t $(CURDIR)/debian/piaware/usr/lib/piaware/helpers dump978/faup978
 
 build_mlat-client:
-	cd mlat-client && ./setup.py build && ./setup.py install
+	# setup venv for mlat-client build
+	$(PYTHON3) -m venv --system-site-packages --without-pip $(VENV)
+	# build cxfreeze for later packaging of mlat-client
+	$(VENV)/bin/python -m build --skip-dependency-check --no-isolation --wheel -C="--build-option=--plat-name" -C="--build-option=$(PYTHON_HOST_PLATFORM)" --outdir $(CURDIR)/wheels cx_Freeze-8.1.0
+	$(VENV)/bin/python -m pip install --no-index --no-deps --ignore-installed --require-virtualenv $(CURDIR)/wheels/cx_Freeze-8.1.0*.whl
+	# build mlat-client proper
+	$(VENV)/bin/python -m build --skip-dependency-check --no-isolation --wheel -C="--build-option=--plat-name" -C="--build-option=$(PYTHON_HOST_PLATFORM)" --outdir $(CURDIR)/wheels mlat-client
+	$(VENV)/bin/python -m pip install --no-index --no-deps --ignore-installed --require-virtualenv $(CURDIR)/wheels/MlatClient-*.whl
 
 install_mlat-client:
-	install -d $(CURDIR)/debian/piaware/usr/lib/piaware/helpers
-	install -t $(CURDIR)/debian/piaware/usr/lib/piaware/helpers /usr/local/bin/fa-mlat-client
-	install -d $(CURDIR)/debian/piaware/usr/lib/python3/dist-packages
-	mv /usr/local/lib/python3.13/dist-packages/MlatClient-0.2.13-py3.13-linux-*.egg $(CURDIR)/debian/piaware/usr/lib/python3/dist-packages/
-	mv /usr/local/lib/python3.13/dist-packages/easy-install.pth $(CURDIR)/debian/piaware/usr/lib/python3/dist-packages/
-	rm /usr/local/bin/mlat-client
-	rm /usr/local/bin/fa-mlat-client
+	# newer cxfreeze deletes --target-dir (see cxfreeze issue #1300), so we have to freeze to a temporary directory and
+	# install from there
+	$(VENV)/bin/python $(VENV)/bin/cxfreeze --target-dir=$(CURDIR)/freeze-mlat-client $(VENV)/bin/fa-mlat-client
+	cp -a $(CURDIR)/freeze-mlat-client/* $(CURDIR)/debian/piaware/usr/lib/piaware/helpers/
 
 clean_mlat-client:
+	rm -fr mlat-client/build mlat-client/dist
+	rm -fr cx_Freeze-8.1.0/build cx_Freeze-8.1.0/dist
+	rm -fr $(VENV) $(CURDIR)/wheels
 
 install_piaware:
 	make -C piaware DESTDIR=$(CURDIR)/debian/piaware install INSTALL_SUDOERS=1 SYSTEMD= SYSVINIT= TCLLAUNCHER=$(CURDIR)/debian/piaware/usr/bin/tcllauncher
