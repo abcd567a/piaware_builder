@@ -80,7 +80,7 @@ build_mlat-client:
 	# setup venv for mlat-client build
 	$(PYTHON3) -m venv --system-site-packages --without-pip $(VENV)
 	# build cxfreeze for later packaging of mlat-client
-	$(VENV)/bin/python -m build --skip-dependency-check --no-isolation --wheel -C="--build-option=--plat-name" -C="--build-option=$(PYTHON_HOST_PLATFORM)" --outdir $(CURDIR)/wheels cx_freeze-7.2.0
+	$(VENV)/bin/python -m build --skip-dependency-check --no-isolation --wheel -C="--build-option=--plat-name" -C="--build-option=$(PYTHON_HOST_PLATFORM)" --outdir $(CURDIR)/wheels cx_Freeze-7.2.0
 	$(VENV)/bin/python -m pip install --no-index --no-deps --ignore-installed --require-virtualenv $(CURDIR)/wheels/cx_Freeze-7.2.0*.whl
 	# build mlat-client proper
 	$(VENV)/bin/python -m build --skip-dependency-check --no-isolation --wheel -C="--build-option=--plat-name" -C="--build-option=$(PYTHON_HOST_PLATFORM)" --outdir $(CURDIR)/wheels mlat-client
