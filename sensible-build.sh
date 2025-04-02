@@ -183,15 +183,17 @@ case $debdist in
                       https://github.com/marcelotduarte/cx_Freeze/archive/refs/tags/6.15.9.tar.gz \
                       d32b309b355f2b377dae585a839e39e3251b3f9716f2b4983be92972c2863000
         ;;
+
     trixie)
-        fetch_archive cx_freeze-8.0.0 \
-                      https://files.pythonhosted.org/packages/9d/9f/e007ffc5f457c5451b7ade774529f64d0cdb61d91dae428568775b4ec9e3/cx_freeze-8.0.0.tar.gz \
-                      80e1f87bb152ed0f97f7c6435e0237d44aade99979927c4627771322a25d550d
+        fetch_archive cx_Freeze-8.1.0 \
+                      https://github.com/marcelotduarte/cx_Freeze/archive/refs/tags/8.1.0.tar.gz \
+                      45d82f7e541ae4fb05ed4250c03a84f969ba94a43bac0112a86c0b7793a12c3b
         ;;
+
     noble)
-        fetch_archive cx_freeze-7.2.0 \
-                      https://files.pythonhosted.org/packages/6e/23/6947cd90cfe87712099fbeab2061309ab1d2a95d54f3453cb6bb21b00034/cx_freeze-7.2.0.tar.gz \
-                      c57f7101b4d35132464b1ec88cb8948c3b7c5b4ece4bb354c16091589cb33583
+        fetch_archive cx_Freeze-7.2.0 \
+                      https://github.com/marcelotduarte/cx_Freeze/archive/refs/tags/7.2.0.tar.gz \
+                      b2846d0215fd6e18a1dccc398f71a67840d77c1fb2f5ae911d87867d4330bcfa
         ;;
 esac
 
