@@ -19,7 +19,7 @@ shallow_clone() {
 }
 
 usage() {
-  echo "syntax: $0 <buster|bullseye|bookworm|trixie|noble>" >&2
+  echo "syntax: $0 <buster|bullseye|bookworm|trixie|forky|noble>" >&2
   exit 1
 }
 
@@ -56,6 +56,11 @@ case $dist in
   trixie)
     debdist=trixie
     targetdist=trixie
+    extraversion=""
+    ;;
+  forky)
+    debdist=forky
+    targetdist=forky
     extraversion=""
     ;;
   xenial)
@@ -101,7 +106,7 @@ shallow_clone https://github.com/flightaware/piaware.git v10.2 $OUTDIR/piaware
 
 shallow_clone https://github.com/flightaware/tcllauncher.git v1.10 $OUTDIR/tcllauncher
 
-shallow_clone https://github.com/flightaware/dump1090.git v10.2 $OUTDIR/dump1090
+shallow_clone https://github.com/abcd567a/dump1090.git 10.2.1 $OUTDIR/dump1090
 
 shallow_clone https://github.com/mutability/mlat-client.git v0.2.13 $OUTDIR/mlat-client
 
@@ -185,6 +190,12 @@ case $debdist in
         ;;
 
     trixie)
+        fetch_archive cx_Freeze-8.1.0 \
+                      https://github.com/marcelotduarte/cx_Freeze/archive/refs/tags/8.1.0.tar.gz \
+                      45d82f7e541ae4fb05ed4250c03a84f969ba94a43bac0112a86c0b7793a12c3b
+        ;;
+
+    forky)
         fetch_archive cx_Freeze-8.1.0 \
                       https://github.com/marcelotduarte/cx_Freeze/archive/refs/tags/8.1.0.tar.gz \
                       45d82f7e541ae4fb05ed4250c03a84f969ba94a43bac0112a86c0b7793a12c3b
