@@ -106,9 +106,11 @@ shallow_clone https://github.com/flightaware/piaware.git v10.2 $OUTDIR/piaware
 
 shallow_clone https://github.com/flightaware/tcllauncher.git v1.10 $OUTDIR/tcllauncher
 
-# shallow_clone https://github.com/flightaware/dump1090.git v10.2 $OUTDIR/dump1090
-
-git clone --depth 1 --branch master https://github.com/abcd567a/dump1090.git $OUTDIR/dump1090
+if [[ `lsb_release -sc` == forky ]]; then
+    shallow_clone https://github.com/abcd567a/dump1090.git master $OUTDIR/dump1090
+else
+    shallow_clone https://github.com/flightaware/dump1090.git v10.2 $OUTDIR/dump1090
+fi
 
 shallow_clone https://github.com/mutability/mlat-client.git v0.2.13 $OUTDIR/mlat-client
 
