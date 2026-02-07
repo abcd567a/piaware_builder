@@ -106,7 +106,7 @@ shallow_clone https://github.com/flightaware/piaware.git v10.2 $OUTDIR/piaware
 
 shallow_clone https://github.com/flightaware/tcllauncher.git v1.10 $OUTDIR/tcllauncher
 
-shallow_clone https://github.com/abcd567a/dump1090.git 10.2.1 $OUTDIR/dump1090
+shallow_clone https://github.com/abcd567a/dump1090.git 10.2 $OUTDIR/dump1090
 
 shallow_clone https://github.com/mutability/mlat-client.git v0.2.13 $OUTDIR/mlat-client
 
