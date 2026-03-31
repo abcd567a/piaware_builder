@@ -102,7 +102,12 @@ fi
 mkdir -p $OUTDIR
 mkdir -p $OUTDIR/archives
 
-shallow_clone https://github.com/flightaware/piaware.git v10.2 $OUTDIR/piaware
+if [[ `lsb_release -sc` == forky ]]; then
+  shallow_clone https://github.com/flightaware/piaware.git v10.2 $OUTDIR/piaware
+  find $OUTDIR/piaware -type f -exec sed -i 's/c_rehash/openssl rehash/g' {} +
+else
+  shallow_clone https://github.com/flightaware/piaware.git v10.2 $OUTDIR/piaware
+fi
 
 shallow_clone https://github.com/flightaware/tcllauncher.git v1.10 $OUTDIR/tcllauncher
 
@@ -114,7 +119,11 @@ fi
 
 shallow_clone https://github.com/mutability/mlat-client.git v0.2.13 $OUTDIR/mlat-client
 
-shallow_clone https://github.com/flightaware/dump978.git v10.2 $OUTDIR/dump978
+if [[ `lsb_release -sc` == forky ]]; then
+  shallow_clone https://github.com/flightaware/dump978.git boost-asio-deprecation $OUTDIR/dump978
+else
+  shallow_clone https://github.com/flightaware/dump978.git v10.2 $OUTDIR/dump978
+fi
 
 fetch_archive() {
     name=$1
